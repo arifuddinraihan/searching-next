@@ -1,3 +1,4 @@
+import { connectToDB } from "@utils/database";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -14,8 +15,15 @@ const handler = NextAuth({
     async signIn({ profile }) {
         try {
             // serverless => lambda => dynamodb
-        } catch (error) {
+            
+            await connectToDB();
 
+            return true;
+        } catch (error) {
+            console.error(error);
+            console.log(error);
+
+            return false;
         }
     },
 })
